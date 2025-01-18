@@ -10,6 +10,13 @@ type RegisterUser {
   phone: String
 }
 
+type Customer {
+  name: String
+  phone: String
+  identification: String
+  user: String
+}
+
 type City {
   id: String
   name: String
@@ -66,6 +73,22 @@ type PaymentMethod {
   giftCardStatus: String
 }
 
+type ProductsRequested {
+  product: Product
+  quantity: Float
+}
+
+type SellsEntity {
+  id: String
+  address: String
+  zipCode: String
+  contactPhone: String
+  city: String
+  paymentMethod: PaymentMethod
+  customer: Customer
+  products: [ProductsRequested!]
+}
+
 type Query {
   posts: [RegisterUser!]!
   countries: [Country!]!
@@ -74,6 +97,7 @@ type Query {
   products: [Product!]!
   login(data: UserInput!): Boolean!
   paymentMethods(id: String!): [PaymentMethod!]!
+  getSellsByCustomerId(customerId: String!): [SellsEntity!]!
 }
 
 input UserInput {
@@ -97,6 +121,7 @@ type Mutation {
   insertDebitCard(data: CardInput!): Boolean!
   insertGiftCard(data: GiftCardCreationInput!): Boolean!
   registerGiftCard(data: GiftCardResgitrationInput!): Boolean!
+  createSell(sell: SellInput!): Boolean!
 }
 
 input CountryInput {
@@ -159,4 +184,19 @@ input GiftCardCreationInput {
 input GiftCardResgitrationInput {
   giftCardNumber: String
   user: String
+}
+
+input SellInput {
+  address: String!
+  zipCode: String!
+  contactPhone: String!
+  city: String!
+  paymentMethod: String!
+  products: [ProductInputSell!]!
+  customer: String!
+}
+
+input ProductInputSell {
+  product: String!
+  quantity: Float!
 }
