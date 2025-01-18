@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { User } from './../core/domain/schemas/user.schema';
+import { Customer, User } from './../core/domain/schemas/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { MD5 } from 'crypto-js';
 
@@ -10,6 +10,7 @@ export class UsersService {
 
     constructor(
         @InjectModel(User.name) private  userRepository: Model<User>,
+        @InjectModel(Customer.name) private  customerRepository: Model<Customer>,
     ){}
 
     public async singup(data : any){
@@ -52,5 +53,25 @@ export class UsersService {
 
         if (user) return true;
         return false;
+    }
+
+
+    public async createCustomer(data : any){
+        //check for user
+
+        console.log('data recived from user', data);
+
+        const user = await this.userRepository.findOne({_id: data.user});
+        if (!user) return false;
+
+
+        const newCustomer = new this.customerRepository(data);
+        const mongoResponse = await newCustomer.save();
+
+        if (mongoResponse) return true;
+        return false;
+
+
+
     }
 }

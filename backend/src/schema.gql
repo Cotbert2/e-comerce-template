@@ -3,6 +3,7 @@
 # ------------------------------------------------------
 
 type RegisterUser {
+  id: String
   name: String
   email: String
   password: String
@@ -53,6 +54,18 @@ type Product {
   image: String
 }
 
+type PaymentMethod {
+  giftCardNumber: String
+  giftCardAmount: Float
+  paymentMethod: String
+  creditCardNumber: String
+  creditCardName: String
+  creditCardExpirationDate: String
+  creditCardCVC: String
+  user: String
+  giftCardStatus: String
+}
+
 type Query {
   posts: [RegisterUser!]!
   countries: [Country!]!
@@ -60,6 +73,7 @@ type Query {
   providers: [Provider!]!
   products: [Product!]!
   login(data: UserInput!): Boolean!
+  paymentMethods(id: String!): [PaymentMethod!]!
 }
 
 input UserInput {
@@ -78,6 +92,11 @@ type Mutation {
   deleteProduct(id: String!): Boolean!
   singup(data: UserInput!): Boolean!
   modifyUser(data: UserInput!): Boolean!
+  createCustomer(data: CustomerInput!): Boolean!
+  insertCreditCard(data: CardInput!): Boolean!
+  insertDebitCard(data: CardInput!): Boolean!
+  insertGiftCard(data: GiftCardCreationInput!): Boolean!
+  registerGiftCard(data: GiftCardResgitrationInput!): Boolean!
 }
 
 input CountryInput {
@@ -116,4 +135,28 @@ input ProductInput {
   provider: String
   rating: Float
   image: String
+}
+
+input CustomerInput {
+  name: String
+  phone: String
+  identification: String
+  user: String
+}
+
+input CardInput {
+  creditCardName: String
+  creditCardNumber: String
+  creditCardExpirationDate: String
+  creditCardCVC: String
+  user: String
+}
+
+input GiftCardCreationInput {
+  giftCardAmount: Float
+}
+
+input GiftCardResgitrationInput {
+  giftCardNumber: String
+  user: String
 }

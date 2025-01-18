@@ -1,36 +1,34 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 
-@ObjectType()
-export class RegisterUser {
-    @Field((type) => String, {nullable: true})
-    id : string;
-
-    @Field((type) => String, {nullable: true})
-    name : string;
-
-    @Field((type) => String, {nullable: true})
-    email : string;
-
-    @Field((type) => String, {nullable: true})
-    password : string;
-
-    @Field((type) => String, {nullable: true})
-    phone : string;
-
-}
 
 @ObjectType()
-export class Customer{
-    
-    @Field((type) => String, {nullable: true})
-    name : string;
+export class PaymentMethod{
 
     @Field((type) => String, {nullable: true})
-    phone : string;
+    giftCardNumber : string;
+
+    @Field((type) => Number, {nullable: true})
+    giftCardAmount : number;
 
     @Field((type) => String, {nullable: true})
-    identification : string;
+    paymentMethod : string;
 
     @Field((type) => String, {nullable: true})
-    user : RegisterUser;
+    creditCardNumber : string;
+
+    @Field((type) => String, {nullable: true})
+    creditCardName : string;
+
+    @Field((type) => String, {nullable: true})
+    creditCardExpirationDate : string;
+
+    @Field((type) => String, {nullable: true})
+    creditCardCVC : string;
+
+    @Field((type) => String, {nullable: true})
+    user : string;
+
+    @Field((type) => String, {nullable: true})
+    giftCardStatus : string;
+
 }

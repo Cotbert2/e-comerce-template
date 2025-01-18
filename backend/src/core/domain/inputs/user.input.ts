@@ -19,3 +19,20 @@ export class UserInput {
     role : string;
 
 }
+
+
+@InputType('CustomerInput')
+export class CustomerInput {
+    @Field((type) => String, {nullable: true})
+    name : string;
+
+    @Field((type) => String, {nullable: true})
+    phone : string;
+
+    @Field((type) => String, {nullable: true})
+    identification : string;
+
+    @Field((type) => String, {nullable: true})
+    user : string;
+
+}
