@@ -58,6 +58,7 @@ type Product {
   category: Category
   provider: Provider
   rating: Float
+  discount: Float
   image: String
 }
 
@@ -159,6 +160,7 @@ input ProductInput {
   category: String
   provider: String
   rating: Float
+  discount: Float
   image: String
 }
 

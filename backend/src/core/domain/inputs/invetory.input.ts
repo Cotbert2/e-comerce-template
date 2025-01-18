@@ -1,35 +1,5 @@
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, Float, InputType } from "@nestjs/graphql";
 
-/*
-
-import { ICountry } from './places.interface'
-
-export interface ICategory{
-    id : string;
-    name : string;
-    description : string;
-}
-
-export interface IProvider{
-    id : string;
-    name : string;
-    email : string;
-    phone : string;
-    description : string;
-    country : ICountry;
-}
-
-export interface IProduct{
-    id : string;
-    name : string;
-    price : number;
-    description : string;
-    stock : number;
-    category : ICategory;
-    provider : IProvider;
-    rating : number;
-    image : string;
-}*/
 @InputType('CategoryInput')
 export class CategoryInput {
     @Field((type) => String, {nullable: true})
@@ -58,21 +28,6 @@ export class ProviderInput {
     country : string;
 }
 
-/*
-
-export interface IProduct{
-    id : string;
-    name : string;
-    price : number;
-    description : string;
-    stock : number;
-    category : ICategory;
-    provider : IProvider;
-    rating : number;
-    image : string;
-}*/
-
-
 
 @InputType('ProductInput')
 export class ProductInput {
@@ -96,6 +51,9 @@ export class ProductInput {
 
     @Field((type) => Number, {nullable: true})
     rating : number;
+
+    @Field((type) => Number, {nullable: true})
+    discount : number;
 
     @Field((type) => String, {nullable: true})
     image : string;

@@ -38,28 +38,6 @@ export class SellsService {
     public async createSell(sell: any) {
         let total = 0;
 
-
-        //check if the payment method is owned by the customer
-        const paymentMethod = await this.paymentRepository.findOne({ _id: sell.paymentMethod });
-
-        // if (!paymentMethod) {
-        //     console.log('[-] Error procesing sell: payment method not found');
-        //     return false;
-        // }
-
-
-
-
-        // if (paymentMethod.customer != sell.customer) {
-        //     console.log('')
-        //     console.log('[-] Error procesing sell: payment method does not belong to the customer');
-        //     return false;
-        // }
-
-        console.log('payment method found');
-
-
-
         //check if all products cuantity is available and update the inventory
         for (let i = 0; i < sell.products.length; i++) {
             const product = sell.products[i];
@@ -76,6 +54,45 @@ export class SellsService {
             total += productData.price * product.quantity;
 
         }
+
+
+        //check if the payment method is owned by the customer
+        const paymentMethod = await this.paymentRepository.findOne({ _id: sell.paymentMethod });
+
+        // if (!paymentMethod) {
+        //     console.log('[-] Error procesing sell: payment method not found');
+        //     return false;
+        // }
+
+
+        //check if paymentMethod is a gift card, then check if the gift card is registered, belongs to the customer and has enough balance
+
+        if (paymentMethod.paymentMethod == 'gift-card') {
+            if (paymentMethod.giftCardStatus != 'registered') {
+                console.log('[-] Error procesing sell: gift card is not registered');
+                return false;
+            }
+
+            // if (paymentMethod.user != sell.customer) {
+            //     console.log('[-] Error procesing sell: gift card does not belong to the customer');
+            //     return false;
+            // }
+
+            if (paymentMethod.giftCardAmount < total) {
+                console.log('[-] Error procesing sell: gift card balance is less than total');
+                return false;
+            }
+        }
+
+
+
+        // if (paymentMethod.customer != sell.customer) {
+        //     console.log('')
+        //     console.log('[-] Error procesing sell: payment method does not belong to the customer');
+        //     return false;
+        // }
+
+        console.log('payment method found');
 
 
 

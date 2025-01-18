@@ -57,6 +57,9 @@ export class Product extends Document {
     rating: number;
 
     @Prop({ required: true })
+    discount: number;
+
+    @Prop({ required: true })
     image: string;
 }
 

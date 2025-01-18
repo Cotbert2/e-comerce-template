@@ -36,18 +36,6 @@ export class Provider {
     country: string;
 }
 
-/*
-export interface IProduct{
-    id : string;
-    name : string;
-    price : number;
-    description : string;
-    stock : number;
-    category : ICategory;
-    provider : IProvider;
-    rating : number;
-    image : string;
-} */
 
 @ObjectType()
 export class Product {
@@ -75,6 +63,9 @@ export class Product {
 
     @Field((type) => Number, {nullable: true})
     rating: number;
+
+    @Field((type) => Number, {nullable: true})
+    discount: number;
 
     @Field((type) => String, {nullable: true})
     image: string;
