@@ -1,0 +1,119 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type RegisterUser {
+  name: String
+  email: String
+  password: String
+  phone: String
+}
+
+type City {
+  id: String
+  name: String
+}
+
+type State {
+  id: String
+  name: String
+  cities: [City!]
+}
+
+type Country {
+  id: String
+  name: String
+  states: [State!]
+}
+
+type Category {
+  id: String
+  name: String
+  description: String
+}
+
+type Provider {
+  id: String
+  name: String
+  email: String
+  phone: String
+  description: String
+  country: String
+}
+
+type Product {
+  id: String
+  name: String
+  price: Float
+  description: String
+  stock: Float
+  category: Category
+  provider: Provider
+  rating: Float
+  image: String
+}
+
+type Query {
+  posts: [RegisterUser!]!
+  countries: [Country!]!
+  categories: [Category!]!
+  providers: [Provider!]!
+  products: [Product!]!
+  login(data: UserInput!): Boolean!
+}
+
+input UserInput {
+  name: String
+  email: String
+  password: String
+  phone: String
+  role: String
+}
+
+type Mutation {
+  insertCountries(data: CountryInput!): Boolean!
+  createCategory(data: CategoryInput!): Boolean!
+  insertProvider(data: ProviderInput!): Boolean!
+  insertProduct(data: ProductInput!): Boolean!
+  deleteProduct(id: String!): Boolean!
+  singup(data: UserInput!): Boolean!
+  modifyUser(data: UserInput!): Boolean!
+}
+
+input CountryInput {
+  name: String
+  states: [StateInput!]
+}
+
+input StateInput {
+  name: String
+  cities: [CityInput!]
+}
+
+input CityInput {
+  name: String
+}
+
+input CategoryInput {
+  name: String
+  description: String
+}
+
+input ProviderInput {
+  name: String
+  email: String
+  phone: String
+  description: String
+  country: String
+}
+
+input ProductInput {
+  name: String
+  price: Float
+  description: String
+  stock: Float
+  category: String
+  provider: String
+  rating: Float
+  image: String
+}
