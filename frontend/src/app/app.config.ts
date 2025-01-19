@@ -5,14 +5,21 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { routes } from './app.routes';
+import { MessageService } from 'primeng/api';
+import { provideHttpClient } from '@angular/common/http';
+import { graphqlProvider } from './apollo.confg';
+
+
+
 
 export const appConfig: ApplicationConfig = {
-  providers: [
+  providers: 
+  [graphqlProvider,
     provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes),
     providePrimeNG({
       theme: {
           preset: Aura
       }
-  }), provideAnimationsAsync()
+  }), provideAnimationsAsync(), provideHttpClient(), MessageService
 ]
 };

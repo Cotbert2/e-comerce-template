@@ -23,16 +23,20 @@
   </p-toolbar>
 </header>
 
+<app-login></app-login>
 
-<main>
-  <div class="titles-over-image">
-    <h2 [@fadeInOut]>{{ currentTitle }}</h2>
-  </div>
-  <div class="main-image">
-    <img src="deliver.webp" alt="sdfsd">
-  </div>
-</main>
 
+
+
+<!-- 
+  <main>
+    <div class="titles-over-image">
+      <h2 [@fadeInOut]>{{ currentTitle }}</h2>
+    </div>
+    <div class="main-image">
+      <img src="deliver.webp" alt="sdfsd">
+    </div>
+  </main>
 <h3 class="productos">Nuestros Productos</h3>
 
 <p-carousel [value]="products" [numVisible]="3" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions" autoplayInterval="3000">
@@ -85,4 +89,7 @@
   <div class="footer-bottom">
     <p>&copy; 2025 Empresa Ficticia. Todos los derechos reservados.</p>
   </div>
-</footer>
+</footer> -->
+
+
+<p-toast></p-toast>

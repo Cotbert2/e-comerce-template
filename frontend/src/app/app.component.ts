@@ -10,6 +10,10 @@ import { CardModule } from 'primeng/card';
 import { CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
 import { FormsModule } from '@angular/forms';
+import { LoginComponent } from "./login/login.component";
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
 
 @Component({
   selector: 'app-root',
@@ -19,11 +23,11 @@ import { FormsModule } from '@angular/forms';
     ToolbarModule,
     AvatarModule,
     MenuModule,
+    ToastModule,
     CardModule,
     CarouselModule,
     TagModule,
-    FormsModule
-  ],
+    FormsModule, LoginComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   animations: [
@@ -43,6 +47,13 @@ export class AppComponent implements OnInit{
   titles: string[] = ["We create", "We build", "We innovate", "We are Jackson Store"];
   currentTitle: string = this.titles[0];
   currentIndex: number = 0;
+
+
+  constructor(
+    private messageService : MessageService
+  ){
+    
+  }
 
   ngOnInit(): void {
     setInterval(() => {
