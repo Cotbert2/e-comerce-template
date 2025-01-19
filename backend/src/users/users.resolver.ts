@@ -1,6 +1,7 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { CustomerInput, UserInput } from 'src/core/domain/inputs/user.input';
+import { User } from 'src/core/domain/entities/auth.entity';
 
 @Resolver()
 export class UsersResolver {
@@ -9,7 +10,7 @@ export class UsersResolver {
     ){}
 
 
-    @Query(() => Boolean)
+    @Query(() => User)
     public async login(
         @Args('data', {type: () => UserInput}) data: UserInput
     ) {

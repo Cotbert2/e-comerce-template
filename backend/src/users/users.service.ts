@@ -42,7 +42,7 @@ export class UsersService {
 
         const user = await this.userRepository.findOne({email: data.email, password: data.password});
         console.log(user);
-        if (user) return true;
+        if (user) return user;
         return false;
     }
 

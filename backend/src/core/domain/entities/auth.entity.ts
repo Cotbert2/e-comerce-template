@@ -34,3 +34,19 @@ export class Customer{
     @Field((type) => String, {nullable: true})
     user : RegisterUser;
 }
+
+@ObjectType()
+
+export class User {
+    @Field((type) => String, {nullable: true})
+    id : string;
+
+    @Field((type) => String, {nullable: true})
+    name : string;
+
+    @Field((type) => String, {nullable: true})
+    email : string;
+
+    @Field((type) => String, {nullable: true})
+    phone : string;
+}

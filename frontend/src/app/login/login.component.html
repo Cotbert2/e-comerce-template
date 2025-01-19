@@ -1,11 +1,16 @@
 <div class="w-100 df ai-center jc-center full-container">
     <p-panel class="panel-input">
+        <div *ngIf="logedUserData.id">
+            <h3>
+                You are alredy Logged in
+            </h3>
+            <div class="w-100 df ai-center jc-space-between ">
 
-        <div *ngIf="isLogged">
-            You are alredy Logged in
+                <p-button label="Log out" (onClick)="handleLogOut()" ></p-button>
+            </div>
         </div>
 
-        <div *ngIf="!isLogged">
+        <div *ngIf="!logedUserData.id">
             <h3>Let's Create something cool!</h3>
     
             <p-floatlabel *ngIf="!isLogin" variant="in">

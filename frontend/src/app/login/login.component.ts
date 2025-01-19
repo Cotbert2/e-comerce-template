@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PanelModule } from 'primeng/panel';
 import { CommonModule } from '@angular/common';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -22,7 +22,14 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+
+  logedUserData : any = {};
+
+  ngOnInit(): void {
+    //get logged user from local storage
+    this.logedUserData = JSON.parse(localStorage.getItem('loggedUser') || '{}');
+  }
 
   @Input() isLogin : boolean = false;
   @Input() isLogged : boolean = false;
@@ -85,6 +92,7 @@ export class LoginComponent {
       (response) => {
         this.messageService.add({severity:'success', summary:'Success', detail:'Account created successfully'});
         console.log(response);
+        this.isLogin = true;
       },
       (error) => {
         this.messageService.add({severity:'error', summary:'Error', detail:'An error occurred while creating account'});
@@ -112,20 +120,35 @@ export class LoginComponent {
 
     this.authService.login(dataToSend).subscribe
     (
-      (response) => {
-        this.messageService.add({severity:'success', summary:'Success', detail:'Login successfull'});
-        console.log(response);
+      (response : any) => {
+        if (response.data.login.id){
+          this.messageService.add({severity:'success', summary:'Success', detail:'Login successfull'});
+          console.log(response);
+          //save response as logged user in the local storage
+
+          localStorage.setItem('loggedUser', JSON.stringify(response.data.login));
+          this.logedUserData = JSON.parse(localStorage.getItem('loggedUser') || '{}');
+        }else {
+          this.messageService.add({severity:'error', summary:'Error', detail:'Invalid email or password'});
+          console.log(response);
+        }
       },
       (error) => {
         this.messageService.add({severity:'error', summary:'Error', detail:'An error occurred while logging in'});
         console.log(error);
       }
     )
+    
 
 
   }
 
 
+  handleLogOut() : void {
+    localStorage.removeItem('loggedUser');
+    this.isLogged = false;
+    this.ngOnInit();
+  }
 
 
 

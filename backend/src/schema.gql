@@ -17,6 +17,13 @@ type Customer {
   user: String
 }
 
+type User {
+  id: String
+  name: String
+  email: String
+  phone: String
+}
+
 type City {
   id: String
   name: String
@@ -96,7 +103,7 @@ type Query {
   categories: [Category!]!
   providers: [Provider!]!
   products: [Product!]!
-  login(data: UserInput!): Boolean!
+  login(data: UserInput!): User!
   paymentMethods(id: String!): [PaymentMethod!]!
   getSellsByCustomerId(customerId: String!): [SellsEntity!]!
 }
