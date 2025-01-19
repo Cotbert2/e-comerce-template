@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from "./login/login.component";
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { InventoryService } from './services/inventory.service';
 
 
 @Component({
@@ -30,32 +31,35 @@ import { MessageService } from 'primeng/api';
     FormsModule, LoginComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('1s', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        animate('1s', style({ opacity: 0 })),
-      ]),
-    ])
-  ]
+  
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'Jackson';
   titles: string[] = ["We create", "We build", "We innovate", "We are Jackson Store"];
   currentTitle: string = this.titles[0];
   currentIndex: number = 0;
 
+  currentView: string = 'home';
+
+  productsInfo : any = {};
+
 
   constructor(
-    private messageService : MessageService
-  ){
-    
+    private messageService: MessageService,
+    private inventoryService : InventoryService
+  ) {
+
   }
 
   ngOnInit(): void {
+    this.inventoryService.getProducts().subscribe((data : any) => {
+      console.log('products: ',data);
+      this.productsInfo = data.data.products;
+    }, (error) => {
+      console.log('error: ',error);
+    })
+
+
     setInterval(() => {
       this.currentIndex = (this.currentIndex + 1) % this.titles.length;
       this.currentTitle = this.titles[this.currentIndex];
@@ -107,23 +111,27 @@ export class AppComponent implements OnInit{
   // Opciones responsivas para el carrusel
   responsiveOptions = [
     {
-        breakpoint: '1024px',
-        numVisible: 3,
-        numScroll: 3
+      breakpoint: '1024px',
+      numVisible: 3,
+      numScroll: 3
     },
     {
-        breakpoint: '768px',
-        numVisible: 2,
-        numScroll: 2
+      breakpoint: '768px',
+      numVisible: 2,
+      numScroll: 2
     },
     {
-        breakpoint: '560px',
-        numVisible: 1,
-        numScroll: 1
+      breakpoint: '560px',
+      numVisible: 1,
+      numScroll: 1
     }
-];
+  ];
 
 
+
+  changeView(view: string): void {
+    this.currentView = view;
+  }
 
 
   getSeverity(status: string): string {
@@ -137,6 +145,14 @@ export class AppComponent implements OnInit{
       default:
         return 'info';
     }
+  }
+
+  getPreviosPriceAfterDiscount(price: number, discount: number): number {
+    return Math.round( price / ( 1 - (discount) / 100));
+  }
+
+  formDiscount(discount : number) : string{
+    return discount + '% off';
   }
 
 }
