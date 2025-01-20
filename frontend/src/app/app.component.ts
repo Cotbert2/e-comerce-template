@@ -14,11 +14,11 @@ import { LoginComponent } from "./login/login.component";
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { InventoryService } from './services/inventory.service';
-
+import { ProductComponent } from './product/product.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,
+  imports: [
     CommonModule,
     ButtonModule,
     ToolbarModule,
@@ -28,7 +28,7 @@ import { InventoryService } from './services/inventory.service';
     CardModule,
     CarouselModule,
     TagModule,
-    FormsModule, LoginComponent],
+    FormsModule, LoginComponent, ProductComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   
@@ -153,6 +153,14 @@ export class AppComponent implements OnInit {
 
   formDiscount(discount : number) : string{
     return discount + '% off';
+  }
+
+  currentProduct : any = {};
+
+  openProductView(product: any): void {
+    console.log('product: ',product);
+    this.currentProduct = product;
+    this.currentView = 'product';
   }
 
 }
