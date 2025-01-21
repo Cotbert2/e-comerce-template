@@ -15,6 +15,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { InventoryService } from './services/inventory.service';
 import { ProductComponent } from './product/product.component';
+import { CheckoutComponent } from "./checkout/checkout.component";
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,9 @@ import { ProductComponent } from './product/product.component';
     CardModule,
     CarouselModule,
     TagModule,
-    FormsModule, LoginComponent, ProductComponent],
+    FormsModule, LoginComponent, ProductComponent,
+    CheckoutComponent
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   
@@ -40,6 +43,8 @@ export class AppComponent implements OnInit {
   currentIndex: number = 0;
 
   currentView: string = 'home';
+
+  itemInCart: any = [];
 
   productsInfo : any = {};
 
@@ -161,6 +166,19 @@ export class AppComponent implements OnInit {
     console.log('product: ',product);
     this.currentProduct = product;
     this.currentView = 'product';
+  }
+
+  newCartItemSelected( item: any){
+    console.log('new item selected',item);
+    this.itemInCart.push(item);
+    console.log('items in cart',this.itemInCart);
+    this.messageService.add({severity:'success', summary: 'Success', detail: `Product ${item.product.name} added to cart`});
+    this.changeView('home');
+  }
+
+
+  removeItemFromCart(data: any): void {
+    this.itemInCart.splice(data, 1);
   }
 
 }

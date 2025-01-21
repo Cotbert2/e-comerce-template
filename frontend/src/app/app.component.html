@@ -13,8 +13,15 @@
     <ng-template #end>
       <div class="flex items-center">
         <button class="bar-item">
-          <i class="pi pi-shopping-cart"></i>
+          <i class="pi pi-shopping-cart" (click)="
+          changeView('checkout')"></i>
         </button>
+
+        <div class="items-container" *ngIf="itemInCart.length > 0">
+          <p class="items-in-cart">{{itemInCart.length}}</p>
+        </div>
+        
+        
         <button class="bar-item" (click)="changeView('login')">
           <i class="pi pi-user"></i>
         </button>
@@ -27,9 +34,12 @@
   <app-login></app-login>
 </div>
 
-<app-product *ngIf="currentView === 'product'" [product]="currentProduct">
+<app-product *ngIf="currentView === 'product'" [product]="currentProduct"
+  (addToCartEvent)="newCartItemSelected($event)">
 
 </app-product>
+
+<app-checkout *ngIf="currentView === 'checkout'" [cartItems]="itemInCart" (removeItemEvent)="removeItemFromCart($event)"></app-checkout>
 
 
 
@@ -65,7 +75,7 @@
         <div class="flex justify-between items-center">
           <div class="mt-0 font-semibold text-xl">{{ '$' + product.price }}</div>
           <span>
-            <p-button icon="pi pi-shopping-cart" styleClass="ml-2" (onClick)="openProductView(product)"/>
+            <p-button icon="pi pi-shopping-cart" styleClass="ml-2" (onClick)="openProductView(product)" />
           </span>
         </div>
       </div>

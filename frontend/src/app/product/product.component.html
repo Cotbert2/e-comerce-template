@@ -64,7 +64,7 @@
 
             <p-inputnumber [(ngModel)]="cuantity" prefix="↑ " inputId="Cuantity" suffix="units" [min]="1" [max]="product.stock" /> <br>
 
-            <p-button icon="pi pi-shopping-cart"  label="Buy Now!"></p-button>
+            <p-button icon="pi pi-shopping-cart"  label="Buy Now!" (onClick)="addToCart()"></p-button>
 
 
 

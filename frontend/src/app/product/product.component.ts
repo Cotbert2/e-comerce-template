@@ -1,4 +1,4 @@
-import { Component,  Input,  OnInit } from '@angular/core';
+import { Component,  Input,  OnInit, Output, EventEmitter } from '@angular/core';
 import { PanelModule } from 'primeng/panel';
 import { ImageModule } from 'primeng/image';
 import { TableModule } from 'primeng/table';
@@ -31,6 +31,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 export class ProductComponent implements OnInit{
   @Input() product : any = {};
 
+  @Output() addToCartEvent = new EventEmitter<any>();
+
   productDescription : any = {};
   tableData : any = [];
 
@@ -44,6 +46,15 @@ export class ProductComponent implements OnInit{
 
   getPreviosPriceAfterDiscount(price: number, discount: number): number {
     return Math.round( price / ( 1 - (discount) / 100));
+  }
+
+  addToCart() : void{
+    const itemToCard = {
+      product: this.product,
+      cuantity: this.cuantity
+    };
+    console.log('new ited selected',itemToCard);
+    this.addToCartEvent.emit(itemToCard);
   }
 
   cuantity : number = 1;

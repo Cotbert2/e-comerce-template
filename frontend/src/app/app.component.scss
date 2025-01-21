@@ -199,3 +199,19 @@ header {
       margin-right: 0.5rem;
     }
   }
+
+
+  .items-in-cart{
+    font-size: .7rem;
+    color: white;
+}
+
+.items-container{
+    background-color: red;
+    position: relative;
+    left: -2rem;
+    top: -1rem;
+
+    padding: .2rem;
+    border-radius: 1rem;
+}
