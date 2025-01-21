@@ -187,11 +187,49 @@
                 <div class="flex flex-col h-48">
                     <div
                         class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
-                        Content III
+
+
+                        <div class="container-step">
+                            <p-dataview #dv [value]="cartItems">
+                                <ng-template #list let-items>
+                                    <div *ngFor="let item of items" class="p-col-12 p">
+                                        <div class="w-100 w-full df ai-center jc-space-between p-4">
+                                            <div class="df ai-center">
+                                                <div class="image-container">
+
+                                                    <img [src]="item.product.image" >
+                                                </div>
+                                                <div class="m-1">
+                                                    <h3>{{item.product.name}}</h3>
+                                                    <p>{{"$" + item.product.price}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="df ai-center jc-space-between">
+                                                <div class="m-1">
+                                                    <p>
+                                                        total : {{item.product.price * item.cuantity}} $
+                                                    </p>
+                                                </div>
+                                                <div class="df m-1">
+                                                    <p-inputnumber [(ngModel)]="item.cuantity" prefix="↑ " inputId="Cuantity" suffix="units" [min]="1" [max]="item.product.stock" /> <br>
+
+                                                    <p-button icon="pi pi-trash" severity="danger" (onClick)="removeItem(item)" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <p-divider />
+
+                            </p-dataview>
+
+                            
+                            <div class="right-button">
+                                <p-button label="Back" severity="secondary" (onClick)="activateCallback(3)" />
+                                <p-button label="Next" [disabled]="!cartItems.length" (onClick)="activateCallback(5)" />
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="py-6">
-                    <p-button label="Back" severity="secondary" (onClick)="activateCallback(2)" />
                 </div>
             </ng-template>
         </p-step-panel>
@@ -209,7 +247,7 @@
                     </div>
                 </div>
                 <div class="py-6">
-                    <p-button label="Back" severity="secondary" (onClick)="activateCallback(2)" />
+                    <p-button label="Back" severity="secondary" (onClick)="activateCallback(3)" />
                 </div>
             </ng-template>
         </p-step-panel>

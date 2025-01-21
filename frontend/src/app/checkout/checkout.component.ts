@@ -12,6 +12,9 @@ import { CatalogService } from '../services/catalog.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { SelectModule } from 'primeng/select';
 import {  ReactiveFormsModule } from '@angular/forms';
+import { DataViewModule } from 'primeng/dataview';
+import { DividerModule } from 'primeng/divider';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 @Component({
@@ -23,7 +26,10 @@ import {  ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     FloatLabelModule,
     InputTextModule,
-    SelectModule
+    SelectModule,
+    DataViewModule,
+    DividerModule,
+    InputNumberModule
   ],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss'
@@ -32,6 +38,7 @@ export class CheckoutComponent implements OnInit{
 
   @Input() cartItems : any = {};
   @Output() checkoutEvent = new EventEmitter<any>();
+  
 
   session : any = {};
   countryCatalog : any = {};
@@ -92,6 +99,8 @@ export class CheckoutComponent implements OnInit{
       console.log('error: ',error);
     });
 
+    console.log('cartItems: ',this.cartItems);
+
     this.session = JSON.parse(localStorage.getItem('loggedUser') || '{}');
     console.log('session: ',this.session);
     this.customerData.user = this.session.id;
@@ -132,6 +141,14 @@ export class CheckoutComponent implements OnInit{
       return false;
     }
     return true;
+  }
+
+
+  
+
+  removeItem(item: any) : void {
+    const index = this.cartItems.indexOf(item);
+    this.cartItems.splice(index, 1);
   }
 
 
