@@ -4,6 +4,10 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AppComponent } from '../app.component';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageService } from 'primeng/api';
+import { ShippingService } from '../services/shipping.service';
 
 @Component({
   selector: 'app-checkout',
@@ -11,32 +15,70 @@ import { AppComponent } from '../app.component';
     StepperModule,
     ButtonModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    FloatLabelModule,
+    InputTextModule
   ],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss'
 })
 export class CheckoutComponent implements OnInit{
 
-  
-
   @Input() cartItems : any = {};
   @Output() checkoutEvent = new EventEmitter<any>();
 
   session : any = {};
 
+  customerData : any = {
+    name: "",
+    phone: "",
+    identification: "",
+    user : ""
+  }
+
+  customerCreated : boolean = false;
+
+
   constructor(
-    private appComponent : AppComponent
+    private appComponent : AppComponent,
+    private messageService : MessageService,
+    private shippingService : ShippingService
   ){
   }
 
   ngOnInit(): void {
     this.session = JSON.parse(localStorage.getItem('loggedUser') || '{}');
     console.log('session: ',this.session);
+    this.customerData.user = this.session.id;
   }
 
   changeCurrentView(view: string) : void {
     this.appComponent.currentView = view;
   }
+
+  validateCustomerData() : boolean{
+    if(this.customerData.name == "" || this.customerData.phone == "" || this.customerData.identification == ""){
+      return false;
+    }
+
+
+    return true;
+
+  }
+
+  createCustomer() : void {
+    this.shippingService.createCustomer(this.customerData).subscribe((data : any) => {
+      console.log('customer created: ',data);
+      this.messageService.add({severity:'success', summary:'Success', detail:'Customer created'});
+      this.customerCreated = true;
+    },
+    (error) => {
+      console.log('error: ',error);
+      this.messageService.add({severity:'error', summary:'Error', detail:'Error creating customer'});
+    })
+
+
+  }
+
 
 }

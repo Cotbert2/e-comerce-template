@@ -19,3 +19,13 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.form-customer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    p-floatlabel{
+        margin: .5rem;
+    }
+}
