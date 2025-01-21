@@ -1,4 +1,4 @@
-<p-stepper [value]="1" [linear]="true">
+<p-stepper [value]="1" [linear]="false">
     <p-step-item [value]="1">
         <p-step>Log In</p-step>
         <p-step-panel>
@@ -39,7 +39,8 @@
 
                             <div class="form-customer">
                                 <p-floatlabel variant="in">
-                                    <input pInputText id="name" autocomplete="off" [(ngModel)]="customerData.name" [disabled]="customerCreated"/>
+                                    <input pInputText id="name" autocomplete="off" [(ngModel)]="customerData.name"
+                                        [disabled]="customerCreated" />
                                     <label for="name">
                                         <i class="pi pi-pen-to-square"></i>
                                         {{'Your Full Name'}}</label>
@@ -48,8 +49,9 @@
                                 <!--phone-->
 
                                 <p-floatlabel variant="in">
-                                    <input pInputText id="phone" autocomplete="off" [(ngModel)]="customerData.phone" [disabled]="customerCreated"/>
-                                    <label for="phone" >
+                                    <input pInputText id="phone" autocomplete="off" [(ngModel)]="customerData.phone"
+                                        [disabled]="customerCreated" />
+                                    <label for="phone">
                                         <i class="pi pi-phone"></i>
                                         {{'Your phone'}}</label>
                                 </p-floatlabel>
@@ -57,8 +59,8 @@
                                 <!--indentification-->
 
                                 <p-floatlabel variant="in">
-                                    <input pInputText id="identification" autocomplete="off" [disabled]="customerCreated"
-                                        [(ngModel)]="customerData.identification" />
+                                    <input pInputText id="identification" autocomplete="off"
+                                        [disabled]="customerCreated" [(ngModel)]="customerData.identification" />
                                     <label for="identification">
                                         <i class="pi pi-id-card"></i>
                                         {{'Your identification'}}</label>
@@ -68,11 +70,13 @@
                             <div class="right-button">
                                 <p-button label="Back" severity="secondary" (onClick)="activateCallback(1)" />
                                 <div *ngIf="!customerCreated">
-                                    <p-button label="Set" [disabled]="!validateCustomerData()" (onClick)="createCustomer()"/>
+                                    <p-button label="Set" [disabled]="!validateCustomerData()"
+                                        (onClick)="createCustomer()" />
                                 </div>
 
                                 <div *ngIf="customerCreated">
-                                    <p-button label="Next" [disabled]="!validateCustomerData()"    (onClick)="activateCallback(3)" />
+                                    <p-button label="Next" [disabled]="!validateCustomerData()"
+                                        (onClick)="activateCallback(3)" />
                                 </div>
                             </div>
                         </div>
@@ -83,35 +87,87 @@
     </p-step-item>
 
     <p-step-item [value]="3">
-        <p-step>Your Address</p-step>
-        <p-step-panel>
-            <ng-template #content let-activateCallback="activateCallback">
-                <div class="flex flex-col h-48">
-                    <div
-                        class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
-                        Content III
-                    </div>
-                </div>
-                <div class="py-6">
-                    <p-button label="Back" severity="secondary" (onClick)="activateCallback(2)" />
-                </div>
-            </ng-template>
-        </p-step-panel>
-    </p-step-item>
-
-
-    <p-step-item [value]="4">
         <p-step>Shipping Address</p-step>
         <p-step-panel>
             <ng-template #content let-activateCallback="activateCallback">
                 <div class="flex flex-col h-48">
                     <div
                         class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
-                        Content III
+                        <div class="container-step shipping">
+                            <h3>We need information about your shipping address</h3>
+
+                            <div class="form-shipping-addess">
+                                <div class="combox-address">
+
+                                    <p-select [options]="countryComboConfig" [(ngModel)]="placesId.countryId"
+                                        placeholder="Select a country" [filter]="true" filterBy="label"
+                                        [showClear]="true">
+                                        <ng-template #dropdownicon>
+                                            <i class="pi pi-map"></i>
+                                        </ng-template>
+                                    </p-select>
+
+                                    <p-select [options]="placesId.countryId" [(ngModel)]="placesId.stateId"
+                                        [disabled]="!placesId.countryId" placeholder="Select a State" [filter]="true"
+                                        filterBy="label" [showClear]="true">
+                                        <ng-template #dropdownicon>
+                                            <i class="pi pi-map"></i>
+                                        </ng-template>
+                                    </p-select>
+
+                                    <p-select [options]="placesId.stateId" [(ngModel)]="placesId.cityId"
+                                        [disabled]="!placesId.stateId" placeholder="Select a City" [filter]="true"
+                                        filterBy="label" [showClear]="true">
+                                        <ng-template #dropdownicon>
+                                            <i class="pi pi-map"></i>
+                                        </ng-template>
+                                    </p-select>
+                                </div>
+                            </div>
+
+                            <!--zip code-->
+
+                            <p-floatlabel variant="in">
+                                <input pInputText id="zipCode" autocomplete="off" [(ngModel)]="shippingData.zipCode" />
+                                <label for="zipCode">
+                                    <i class="pi pi-map"></i>
+                                    {{'Your Zip Code'}}</label>
+                            </p-floatlabel>
+
+
+                            <!--Street 1-->
+
+                            <p-floatlabel variant="in">
+                                <input pInputText id="street1" autocomplete="off" [(ngModel)]="shippingData.street1" />
+                                <label for="street1">
+                                    <i class="pi pi-map"></i>
+                                    {{'Your Street 1'}}</label>
+                            </p-floatlabel>
+
+                            <!--Street 2-->
+
+                            <p-floatlabel variant="in">
+                                <input pInputText id="street2" autocomplete="off" [(ngModel)]="shippingData.street2" />
+                                <label for="street2">
+                                    <i class="pi pi-map"></i>
+                                    {{'Your Street 2'}}</label>
+                            </p-floatlabel>
+
+                            <!--Reference-->
+
+                            <p-floatlabel variant="in">
+                                <input pInputText id="reference" autocomplete="off" [(ngModel)]="shippingData.reference" />
+                                <label for="reference">
+                                    <i class="pi pi-map"></i>
+                                    {{'Your Reference'}}</label>
+                            </p-floatlabel>
+                            <div class="right-button">
+                                <p-button label="Back" severity="secondary" (onClick)="activateCallback(2)" />
+                                <p-button label="Next" [disabled]="!validateShippingData()"
+                                    (onClick)="activateCallback(4)" />
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="py-6">
-                    <p-button label="Back" severity="secondary" (onClick)="activateCallback(2)" />
                 </div>
             </ng-template>
         </p-step-panel>
@@ -122,7 +178,9 @@
 
 
 
-    <p-step-item [value]="5">
+
+
+    <p-step-item [value]="4">
         <p-step>Products Selected</p-step>
         <p-step-panel>
             <ng-template #content let-activateCallback="activateCallback">
@@ -140,7 +198,7 @@
     </p-step-item>
 
 
-    <p-step-item [value]="6">
+    <p-step-item [value]="5">
         <p-step>Payment Methods</p-step>
         <p-step-panel>
             <ng-template #content let-activateCallback="activateCallback">
