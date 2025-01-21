@@ -57,9 +57,20 @@ export class CheckoutComponent implements OnInit{
     user : ""
   }
 
+  paymentOptions : any = [
+    {label: 'Card', value: 'card'},
+    {label: 'Gift Card', value: 'giftCard'},
+    {label: 'Paypal', value: 'paypal'},
+  ]
+
   customerCreated : boolean = false;
 
   countryComboConfig : any = {};
+  currentPayment : string = "";
+  cardData : any = {};
+
+
+  giftCard : string = "";
 
 
   constructor(
@@ -150,6 +161,14 @@ export class CheckoutComponent implements OnInit{
     const index = this.cartItems.indexOf(item);
     this.cartItems.splice(index, 1);
   }
+
+  payWithPaypal() : void {
+    console.log('paying with paypal');
+  }
+
+  
+
+  
 
 
 }
