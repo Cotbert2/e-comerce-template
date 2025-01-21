@@ -5,7 +5,7 @@ import { Document, Mongoose, Schema as MongooseSchema } from 'mongoose';
 @Schema()
 
 export class Payment extends Document {
-    @Prop({ required: false , unique : true})
+    @Prop({ required: false})
     giftCardNumber: string;
 
     @Prop({ required: false })

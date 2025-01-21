@@ -83,7 +83,7 @@
 }
 
 .payment{
-    height: 30rem;
+    margin-bottom: 5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -91,4 +91,8 @@
     h3, p-floatlabel, p-select{
         margin: 1rem;
     }
+}
+
+.item-payment {
+    margin: 1rem;
 }

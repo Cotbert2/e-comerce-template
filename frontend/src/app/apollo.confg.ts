@@ -14,11 +14,19 @@
 import { Apollo, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { ApplicationConfig, inject } from '@angular/core';
-import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
+import { ApolloClientOptions, DefaultOptions, InMemoryCache } from '@apollo/client/core';
 import { setContext } from '@apollo/client/link/context';
 import { take, firstValueFrom, throwError } from 'rxjs';
 
 
+const defaultOptions: DefaultOptions = {
+  query: {
+    fetchPolicy: 'no-cache', // No almacenar las respuestas de las consultas
+  },
+  mutate: {
+    fetchPolicy: 'no-cache', // No almacenar las respuestas de las mutaciones
+  },
+};
 
 
 
@@ -26,7 +34,9 @@ export function apolloOptionsFactory(): ApolloClientOptions<any> {
   const httpLink = inject(HttpLink);
   return {
     uri: 'http://localhost:3000/graphql',
-    cache: new InMemoryCache(), // Usar un caché en memoria
+    //dont save cache
+    cache: new InMemoryCache(),
+    defaultOptions: defaultOptions,
   };
 }
 

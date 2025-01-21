@@ -250,6 +250,30 @@
 
                         <div class="container-step payment">
                             <h3>We almost done</h3>
+
+                            <div class="flex items-center" *ngFor="let option of userPaymentMethods.paymentMethods">
+                                <div *ngIf="option.paymentMethod == 'credit-card'" class="item-payment">
+                                    <p-radiobutton name="card" [value]="option" inputId="card" [(ngModel)]="selectedPaymentMethod" />
+                                    <label for="ingredient1" class="ml-2"> Card ended with {{getLast6Digits(option.creditCardNumber)}}</label>
+                                </div>
+
+
+                                <div *ngIf="option.paymentMethod == 'gift-card'" class="item-payment">
+                                    <p-radiobutton name="gift-card" [value]="option" inputId="gift-card" [(ngModel)]="selectedPaymentMethod"/>
+                                    <label for="gift-card" class="ml-2">{{option.giftCardAmount}} $ GiftCard</label>
+                                </div>
+                            </div>
+
+                            
+
+                            <!--divider-->
+
+                            <p-divider />
+
+
+                            <p>Add a new payment method instead</p>
+
+
                             <p-select placeholder="Select a Payment method" [options]="paymentOptions"
                                 [(ngModel)]="currentPayment">
                                 <ng-template #dropdownicon>
@@ -312,7 +336,8 @@
                                 </div>
 
                                 <div class="w-100 df jc-center">
-                                    <p-button label="Register Card" icon="pi pi-credit-card"></p-button>
+                                    <p-button label="Register Card" icon="pi pi-credit-card"
+                                        [disabled]="!validateCardData()" (onClick)="registerCard()"></p-button>
                                 </div>
 
 
@@ -323,25 +348,28 @@
                             <div class="payment-options" *ngIf="currentPayment == 'giftCard'">
 
                                 <div>
-                                    <p class="ta-center">Advice: Gift card are not accumulative, so you need to use a gift card with an
+                                    <p class="ta-center">Advice: Gift card are not accumulative, so you need to use a
+                                        gift card with an
                                         amount greater or equal to the shipping order</p>
 
 
-                                        <div class="df ai-center jc-center">
+                                    <div class="df ai-center jc-center">
 
-                                            <p-floatlabel variant="in">
-                                                <input pInputText id="giftCard" autocomplete="off" [(ngModel)]="giftCard" />
-                                                <label for="giftCard">
-                                                    <i class="pi pi-credit-card"></i>
-                                                    {{'Your Gift Card'}}</label>
-                                                </p-floatlabel>
-                                                <p-button label="Validate Gift Card" icon="pi pi-credit-card"></p-button>
-                                            </div>
+                                        <p-floatlabel variant="in">
+                                            <input pInputText id="giftCard" autocomplete="off" [(ngModel)]="giftCard" />
+                                            <label for="giftCard">
+                                                <i class="pi pi-credit-card"></i>
+                                                {{'Your Gift Card'}}</label>
+                                        </p-floatlabel>
+                                        <p-button label="Validate Gift Card" icon="pi pi-credit-card"
+                                            [disabled]="!validateGiftCard()" (onClick)="registerGiftCard()"></p-button>
+                                    </div>
                                 </div>
 
 
                                 <div class="df jc-center">
-                                    <p-button label="Pay with Gift Card" icon="pi pi-credit-card"></p-button>
+                                    <p-button label="Pay with Gift Card" icon="pi pi-credit-card"
+                                        [disabled]="isValidGiftCard"></p-button>
                                 </div>
                             </div>
 

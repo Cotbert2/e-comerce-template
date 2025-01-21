@@ -16,6 +16,12 @@ import { DataViewModule } from 'primeng/dataview';
 import { DividerModule } from 'primeng/divider';
 import { InputNumberModule } from 'primeng/inputnumber';
 
+//import regular expresion
+import { PatternValidator } from '@angular/forms';
+import { PaymentsService } from '../services/payments.service';
+import { RadioButtonModule } from 'primeng/radiobutton';
+
+
 
 @Component({
   selector: 'app-checkout',
@@ -29,7 +35,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
     SelectModule,
     DataViewModule,
     DividerModule,
-    InputNumberModule
+    InputNumberModule,
+    RadioButtonModule
   ],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss'
@@ -44,6 +51,8 @@ export class CheckoutComponent implements OnInit{
   countryCatalog : any = {};
 
   isValidAddressData : boolean = false;
+
+  isValidGiftCard : boolean = false;
 
 
   placesId : any = {}
@@ -72,12 +81,17 @@ export class CheckoutComponent implements OnInit{
 
   giftCard : string = "";
 
+  userPaymentMethods : any = {};
+
+  selectedPaymentMethod : any = {};
+
 
   constructor(
     private appComponent : AppComponent,
     private messageService : MessageService,
     private shippingService : ShippingService,
-    private catalogService : CatalogService
+    private catalogService : CatalogService,
+    private paymentService : PaymentsService
   ){
   }
 
@@ -110,11 +124,15 @@ export class CheckoutComponent implements OnInit{
       console.log('error: ',error);
     });
 
+    
     console.log('cartItems: ',this.cartItems);
-
+    
     this.session = JSON.parse(localStorage.getItem('loggedUser') || '{}');
     console.log('session: ',this.session);
     this.customerData.user = this.session.id;
+
+    this.updateUserPaymentMethods();
+
   }
 
   changeCurrentView(view: string) : void {
@@ -164,6 +182,105 @@ export class CheckoutComponent implements OnInit{
 
   payWithPaypal() : void {
     console.log('paying with paypal');
+  }
+
+  validateCardData() : boolean {
+    if(!this.cardData.name || !this.cardData.number || !this.cardData.expiration || !this.cardData.cvv){
+      return false;
+    }
+
+    if(this.cardData.number.length != 16){
+      return false;
+    }
+
+    if(this.cardData.cvv.length != 3){
+      return false;
+    }
+
+    //expiration date format: MM/YY use regex
+    if (this.cardData.expiration.length != 5
+
+      || !/^\d{2}\/\d{2}$/.test(this.cardData.expiration)
+    ){
+      return false;
+    }
+
+
+
+
+    return true;
+  }
+
+  validateGiftCard() : boolean {
+    if(!this.giftCard || this.giftCard.length != 36){
+      return false;
+    }
+
+    return true;
+  }
+
+
+  registerGiftCard() : void {
+    const dataToSend = {
+      user: this.session.id,
+      giftCardNumber: this.giftCard
+    };
+    this.paymentService.registerGiftCard(
+      dataToSend
+    ).subscribe((data : any) => {
+      console.log('gift card registered: ',data);
+      this.messageService.add({severity:'success', summary:'Success', detail:'Gift card registered'});
+      this.isValidGiftCard = true;
+      
+      setTimeout(() => {
+        this.updateUserPaymentMethods();
+      }, 3000);
+
+    },
+    (error) => {
+      console.log('error: ',error);
+      this.messageService.add({severity:'error', summary:'Error', detail:'Error registering gift card'});
+    });
+
+
+    
+  }
+
+  registerCard() : void {
+    const dataToSend = {
+      creditCardName: this.cardData.name,
+      creditCardNumber: this.cardData.number,
+      creditCardExpirationDate: this.cardData.expiration,
+      creditCardCVC: this.cardData.cvv,
+      user: this.session.id
+    };
+    this.paymentService.registerCard(dataToSend)
+    .subscribe((data : any) => {
+      console.log('card registered: ',data);
+      this.messageService.add({severity:'success', summary:'Success', detail:'Card registered'});
+      this.updateUserPaymentMethods();
+    },
+    (error) => {
+      console.log('error: ',error);
+      this.messageService.add({severity:'error', summary:'Error', detail:'Error registering card'});
+    });
+    
+  }
+
+  updateUserPaymentMethods() : void {
+    console.log('updating payment methods');
+    this.paymentService.getUserPaymentMethods(this.session.id).subscribe
+    ((data : any) => {
+      this.userPaymentMethods = data.data;
+      console.log('payment methods: ',data);
+    },
+    (error) => {
+      console.log('error: ',error);
+    });
+  }
+
+  getLast6Digits(cardNumber : string) : string {
+    return cardNumber.slice(-6);
   }
 
   
