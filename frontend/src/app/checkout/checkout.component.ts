@@ -85,6 +85,8 @@ export class CheckoutComponent implements OnInit{
 
   selectedPaymentMethod : any = {};
 
+  validatePaymentData : boolean = false;
+
 
   constructor(
     private appComponent : AppComponent,
@@ -281,6 +283,19 @@ export class CheckoutComponent implements OnInit{
 
   getLast6Digits(cardNumber : string) : string {
     return cardNumber.slice(-6);
+  }
+
+  pay(){
+    const dataToSend = {
+      address: this.shippingData.street1 + ';' + this.shippingData.street2 + ';' + this.placesId.cityId,
+      zipCode: this.shippingData.zipCode,
+      contactPhone: this.customerData.phone,
+      city: this.placesId.cityId,
+      paymentMethod: this.selectedPaymentMethod.id,
+      //products: { product: null, quantity: null }
+      //customer: null
+    };
+    console.log('data to send: ',dataToSend);
   }
 
   

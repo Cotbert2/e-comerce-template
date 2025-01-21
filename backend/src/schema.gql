@@ -70,6 +70,7 @@ type Product {
 }
 
 type PaymentMethod {
+  id: String
   giftCardNumber: String
   giftCardAmount: Float
   paymentMethod: String

@@ -366,16 +366,17 @@
                                     </div>
                                 </div>
 
-
-                                <div class="df jc-center">
-                                    <p-button label="Pay with Gift Card" icon="pi pi-credit-card"
-                                        [disabled]="isValidGiftCard"></p-button>
-                                </div>
                             </div>
 
                             <div class="payment-options" *ngIf="currentPayment == 'paypal'">
                                 <p-button label="Pay with Paypal" icon="pi pi-paypal"
                                     (onClick)="payWithPaypal()"></p-button>
+                            </div>
+
+
+                            <div class="df jc-center">
+                                <p-button label="Pay!" icon="pi pi-credit-card"
+                                    [disabled]="validatePaymentData" (onClick)="pay()"></p-button>
                             </div>
                         </div>
                     </div>

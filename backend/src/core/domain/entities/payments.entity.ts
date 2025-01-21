@@ -5,6 +5,9 @@ import { Field, ObjectType } from "@nestjs/graphql";
 export class PaymentMethod{
 
     @Field((type) => String, {nullable: true})
+    id : string
+
+    @Field((type) => String, {nullable: true})
     giftCardNumber : string;
 
     @Field((type) => Number, {nullable: true})
