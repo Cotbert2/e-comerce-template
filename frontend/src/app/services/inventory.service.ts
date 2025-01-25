@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { ProductsQuery } from './graphql/queries/inventory.query';
+import { ProductsQuery,CategoryQuery,ProductsByCategoryQuery } from './graphql/queries/inventory.query';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,23 @@ export class InventoryService {
     return this.apollo.query(
       {
         query: ProductsQuery,
+      })
+  }
+
+  getCategories() {
+    return this.apollo.query(
+      {
+        query: CategoryQuery,
+      })
+  }
+
+  getProductsByCategory(category: string) {
+    return this.apollo.query(
+      {
+        query: ProductsByCategoryQuery,
+        variables: {
+          category
+        }
       })
   }
 }

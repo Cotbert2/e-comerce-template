@@ -56,4 +56,12 @@ export class InventoryResolver {
     public async products() {
         return await this.productService.findAll();
     }
+
+
+    @Query(() => [Product])
+    public async productsByCategory(
+        @Args('category') category: string
+    ) {
+        return await this.productService.findByCategory(category);
+    }
 }

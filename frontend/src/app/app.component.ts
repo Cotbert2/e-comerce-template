@@ -16,6 +16,7 @@ import { MessageService } from 'primeng/api';
 import { InventoryService } from './services/inventory.service';
 import { ProductComponent } from './product/product.component';
 import { CheckoutComponent } from "./checkout/checkout.component";
+import { CategoriesComponent } from "./categories/categories.component";
 
 @Component({
   selector: 'app-root',
@@ -30,7 +31,8 @@ import { CheckoutComponent } from "./checkout/checkout.component";
     CarouselModule,
     TagModule,
     FormsModule, LoginComponent, ProductComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    CategoriesComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -179,6 +181,11 @@ export class AppComponent implements OnInit {
 
   removeItemFromCart(data: any): void {
     this.itemInCart.splice(data, 1);
+  }
+
+  openProductViewFromCategories(product: any) : void {
+    this.currentProduct = product;
+    this.currentView = 'product';
   }
 
 }

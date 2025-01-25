@@ -55,6 +55,16 @@ export class ProductsService{
         @InjectModel(Category.name) private  catalogRepository: Model<Category>,
     ){}
 
+    public async findByCategory(category: string){
+        const data = await this.productRepository.find({category: category})
+        .populate('provider')
+        .populate('category')
+        .exec();
+
+        console.log('products', data);
+        return data;
+    }
+
     public async insertProduct(product: any) {
         console.log(product);
         const providerSelected = await this.providerRepository.findOne({_id: product.provider});
