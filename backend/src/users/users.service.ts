@@ -62,14 +62,14 @@ export class UsersService {
         console.log('data recived from user', data);
 
         const user = await this.userRepository.findOne({_id: data.user});
-        if (!user) return false;
+        if (!user) return null;
 
 
         const newCustomer = new this.customerRepository(data);
         const mongoResponse = await newCustomer.save();
 
-        if (mongoResponse) return true;
-        return false;
+        if (mongoResponse) return mongoResponse;
+        return null;
 
 
 

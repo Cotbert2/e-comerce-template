@@ -11,6 +11,7 @@ type RegisterUser {
 }
 
 type Customer {
+  id: String
   name: String
   phone: String
   identification: String
@@ -125,7 +126,7 @@ type Mutation {
   deleteProduct(id: String!): Boolean!
   singup(data: UserInput!): Boolean!
   modifyUser(data: UserInput!): Boolean!
-  createCustomer(data: CustomerInput!): Boolean!
+  createCustomer(data: CustomerInput!): Customer!
   insertCreditCard(data: CardInput!): Boolean!
   insertDebitCard(data: CardInput!): Boolean!
   insertGiftCard(data: GiftCardCreationInput!): Boolean!

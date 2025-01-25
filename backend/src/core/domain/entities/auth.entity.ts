@@ -21,6 +21,9 @@ export class RegisterUser {
 
 @ObjectType()
 export class Customer{
+
+    @Field((type) => String, {nullable: true})
+    id : string;
     
     @Field((type) => String, {nullable: true})
     name : string;

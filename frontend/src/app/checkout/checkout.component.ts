@@ -59,6 +59,7 @@ export class CheckoutComponent implements OnInit{
   shippingData : any = {};
 
 
+
   customerData : any = {
     name: "",
     phone: "",
@@ -77,6 +78,8 @@ export class CheckoutComponent implements OnInit{
   countryComboConfig : any = {};
   currentPayment : string = "";
   cardData : any = {};
+
+  customerCreatedData : any = {};
 
 
   giftCard : string = "";
@@ -155,6 +158,7 @@ export class CheckoutComponent implements OnInit{
     this.shippingService.createCustomer(this.customerData).subscribe((data : any) => {
       console.log('customer created: ',data);
       this.messageService.add({severity:'success', summary:'Success', detail:'Customer created'});
+      this.customerCreatedData = data;
       this.customerCreated = true;
     },
     (error) => {
@@ -292,10 +296,26 @@ export class CheckoutComponent implements OnInit{
       contactPhone: this.customerData.phone,
       city: this.placesId.cityId,
       paymentMethod: this.selectedPaymentMethod.id,
+      products: this.cartItems.map((item : any) => {
+        return { 
+          product: item.product.id,
+          quantity: item.cuantity
+        }
+      }),
       //products: { product: null, quantity: null }
-      //customer: null
+      customer: this.customerCreatedData.data.createCustomer.id
     };
     console.log('data to send: ',dataToSend);
+
+    this.shippingService.generateShipping(dataToSend).subscribe((data : any) => {
+      console.log('shipping generated: ',data);
+      this.messageService.add({severity:'success', summary:'Success', detail:'Shipping generated'});
+      this.checkoutEvent.emit();
+    },
+    (error) => {
+      console.log('error: ',error);
+      this.messageService.add({severity:'error', summary:'Error', detail:'Error generating shipping'});
+    });
   }
 
   
