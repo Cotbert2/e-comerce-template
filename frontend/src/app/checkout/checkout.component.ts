@@ -43,6 +43,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 })
 export class CheckoutComponent implements OnInit{
 
+  isCheckoutSuccess : boolean = false;
+
   @Input() cartItems : any = {};
   @Output() checkoutEvent = new EventEmitter<any>();
   
@@ -310,6 +312,7 @@ export class CheckoutComponent implements OnInit{
     this.shippingService.generateShipping(dataToSend).subscribe((data : any) => {
       console.log('shipping generated: ',data);
       this.messageService.add({severity:'success', summary:'Success', detail:'Shipping generated'});
+      this.isCheckoutSuccess = true;
       this.checkoutEvent.emit();
     },
     (error) => {

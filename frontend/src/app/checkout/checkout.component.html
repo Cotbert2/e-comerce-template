@@ -1,3 +1,5 @@
+<div *ngIf="!isCheckoutSuccess">
+
 <p-stepper [value]="1" [linear]="false" class="stepper">
     <p-step-item [value]="1">
         <p-step>Log In</p-step>
@@ -385,3 +387,14 @@
         </p-step-panel>
     </p-step-item>
 </p-stepper>
+
+
+</div>
+
+<div *ngIf="isCheckoutSuccess" class="success-checkout">
+    <div>
+        <p class="title">Congrats!</p>
+        <p>Your order has been placed successfully</p>
+        <i class="pi pi-verified"></i>
+    </div>
+</div>
