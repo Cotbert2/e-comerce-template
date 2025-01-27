@@ -39,7 +39,9 @@
 
 </app-product>
 
-<app-checkout *ngIf="currentView === 'checkout'" [cartItems]="itemInCart" (removeItemEvent)="removeItemFromCart($event)"></app-checkout>
+<app-checkout *ngIf="currentView === 'checkout'" [cartItems]="itemInCart" (removeItemEvent)="removeItemFromCart($event)"
+(onSuccessfulCheckout)="checkoutSuccess($event)"
+></app-checkout>
 
 <app-categories *ngIf="currentView === 'categories'" (openProductViewEvent)="openProductViewFromCategories($event)"
 
@@ -54,7 +56,7 @@
       <img src="deliver.webp" alt="sdfsd">
     </div>
   </main>
-  <h3 class="productos">Nuestros Productos</h3>
+  <h3 class="productos">Our Products</h3>
 
   <p-carousel [value]="productsInfo" [numVisible]="3" [numScroll]="3" [circular]="true"
     [responsiveOptions]="responsiveOptions" autoplayInterval="3000">

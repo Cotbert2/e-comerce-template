@@ -47,6 +47,7 @@ export class CheckoutComponent implements OnInit{
 
   @Input() cartItems : any = {};
   @Output() checkoutEvent = new EventEmitter<any>();
+  @Output() onSuccessfulCheckout = new EventEmitter<boolean>();
   
 
   session : any = {};
@@ -313,6 +314,7 @@ export class CheckoutComponent implements OnInit{
       console.log('shipping generated: ',data);
       this.messageService.add({severity:'success', summary:'Success', detail:'Shipping generated'});
       this.isCheckoutSuccess = true;
+      this.onSuccessfulCheckout.emit(true);
       this.checkoutEvent.emit();
     },
     (error) => {

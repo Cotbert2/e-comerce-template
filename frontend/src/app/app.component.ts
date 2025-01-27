@@ -188,4 +188,8 @@ export class AppComponent implements OnInit {
     this.currentView = 'product';
   }
 
+  checkoutSuccess(data : any) : void {
+    this.itemInCart = [];
+  }
+
 }
