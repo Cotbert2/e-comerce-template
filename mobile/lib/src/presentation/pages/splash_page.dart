@@ -57,11 +57,15 @@ class _SplashPageState extends State<SplashPage>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // You can replace this with a Lottie animation if you have one
-              Icon(
-                Icons.shopping_bag,
-                size: 100,
-                color: Colors.white,
+              // Lottie animation for shopping cart loading
+              SizedBox(
+                width: 150,
+                height: 150,
+                child: Lottie.asset(
+                  'assets/animations/shopping_bag_pulse.json',
+                  fit: BoxFit.contain,
+                  repeat: true,
+                ),
               ),
               const SizedBox(height: 24),
               Text(

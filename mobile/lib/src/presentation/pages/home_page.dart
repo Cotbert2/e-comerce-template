@@ -17,23 +17,38 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late ScrollController _scrollController;
   late AnimationController _fadeController;
+  late AnimationController _slideController;
   late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideAnimation;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
+    
     _fadeController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1200),
       vsync: this,
     );
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _fadeController, curve: Curves.easeIn),
+    
+    _slideController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
     );
+    
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _fadeController, curve: Curves.easeInOut),
+    );
+    
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.3),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _slideController, curve: Curves.easeOut));
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadData();
       _fadeController.forward();
+      _slideController.forward();
     });
   }
 
@@ -47,6 +62,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void dispose() {
     _scrollController.dispose();
     _fadeController.dispose();
+    _slideController.dispose();
     super.dispose();
   }
 
@@ -108,11 +124,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ),
       body: FadeTransition(
         opacity: _fadeAnimation,
-        child: Column(
-          children: [
-            const CategoryList(),
-            Expanded(
-              child: Consumer<ProductProvider>(
+        child: SlideTransition(
+          position: _slideAnimation,
+          child: Column(
+            children: [
+              const CategoryList(),
+              Expanded(
+                child: Consumer<ProductProvider>(
                 builder: (context, productProvider, child) {
                   if (productProvider.isLoading) {
                     return const ShimmerLoading();
@@ -157,6 +175,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
             ),
           ],
+          ),
         ),
       ),
     );
