@@ -24,6 +24,9 @@ class ProductProvider extends ChangeNotifier {
   ProductLoadingState _loadingState = ProductLoadingState.initial;
   String? _errorMessage;
   String? _selectedCategoryId;
+  int _currentPage = 1;
+  bool _hasMoreProducts = true;
+  bool _isLoadingMore = false;
 
   // Getters
   List<Product> get products => _products;
@@ -31,21 +34,55 @@ class ProductProvider extends ChangeNotifier {
   ProductLoadingState get loadingState => _loadingState;
   String? get errorMessage => _errorMessage;
   String? get selectedCategoryId => _selectedCategoryId;
-  bool get isLoading => _loadingState == ProductLoadingState.loading;
+  bool get isLoading => _loadingState == ProductLoadingState.loading || _isLoadingMore;
+  bool get hasMoreProducts => _hasMoreProducts;
+  int get currentPage => _currentPage;
 
   Future<void> loadProducts() async {
     _loadingState = ProductLoadingState.loading;
     _errorMessage = null;
+    _currentPage = 1;
+    _hasMoreProducts = true;
     notifyListeners();
 
     try {
       _products = await getProductsUseCase();
       _loadingState = ProductLoadingState.loaded;
+      // Simulate pagination - if less than expected, no more products
+      _hasMoreProducts = _products.length >= 10;
     } catch (e) {
       _errorMessage = e.toString();
       _loadingState = ProductLoadingState.error;
     }
 
+    notifyListeners();
+  }
+
+  Future<void> loadMoreProducts() async {
+    if (_isLoadingMore || !_hasMoreProducts) return;
+
+    _isLoadingMore = true;
+    notifyListeners();
+
+    try {
+      // Simulate loading more products by duplicating current ones
+      // In a real app, you would call an API with page parameters
+      await Future.delayed(const Duration(seconds: 1)); // Simulate network delay
+      
+      final moreProducts = await getProductsUseCase();
+      
+      // Simulate pagination logic
+      if (moreProducts.isNotEmpty && _currentPage < 3) { // Max 3 pages for demo
+        _products.addAll(moreProducts);
+        _currentPage++;
+      } else {
+        _hasMoreProducts = false;
+      }
+    } catch (e) {
+      _errorMessage = e.toString();
+    }
+
+    _isLoadingMore = false;
     notifyListeners();
   }
 
@@ -81,6 +118,8 @@ class ProductProvider extends ChangeNotifier {
 
   void clearSelection() {
     _selectedCategoryId = null;
+    _currentPage = 1;
+    _hasMoreProducts = true;
     notifyListeners();
   }
 }
