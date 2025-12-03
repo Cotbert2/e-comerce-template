@@ -60,6 +60,14 @@ class MyApp extends StatelessWidget {
             '/login': (context) => const LoginPage(),
             '/checkout': (context) => const CheckoutPage(),
           },
+          onGenerateRoute: (settings) {
+            // Handle dynamic routes like product details
+            if (settings.name?.startsWith('/product/') == true) {
+              // This would be used for deep linking, but for now we handle navigation programmatically
+              return null;
+            }
+            return null;
+          },
         ),
       ),
     );
