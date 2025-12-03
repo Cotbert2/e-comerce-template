@@ -126,12 +126,7 @@ class _CartPageState extends State<CartPage> with SingleTickerProviderStateMixin
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            // TODO: Implement checkout functionality
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Checkout functionality not implemented yet'),
-                              ),
-                            );
+                            Navigator.pushNamed(context, '/checkout');
                           },
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 16),

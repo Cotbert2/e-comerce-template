@@ -57,6 +57,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         title: const Text('E-Commerce'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              Navigator.pushNamed(context, '/login');
+            },
+          ),
           Consumer<CartProvider>(
             builder: (context, cartProvider, child) {
               return Stack(

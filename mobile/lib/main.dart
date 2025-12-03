@@ -6,6 +6,10 @@ import 'src/core/network/graphql_config.dart';
 import 'src/presentation/pages/home_page.dart';
 import 'src/presentation/pages/cart_page.dart';
 import 'src/presentation/pages/splash_page.dart';
+import 'src/presentation/pages/login_page.dart';
+import 'src/presentation/pages/checkout_page.dart';
+import 'src/presentation/providers/auth_provider.dart';
+import 'src/presentation/providers/checkout_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +38,12 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
             value: DependencyInjection.cartProvider,
           ),
+          ChangeNotifierProvider(
+            create: (_) => AuthProvider(authRepository: DependencyInjection.authRepository),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => CheckoutProvider(),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -47,6 +57,8 @@ class MyApp extends StatelessWidget {
             '/splash': (context) => const SplashPage(),
             '/': (context) => const HomePage(),
             '/cart': (context) => const CartPage(),
+            '/login': (context) => const LoginPage(),
+            '/checkout': (context) => const CheckoutPage(),
           },
         ),
       ),

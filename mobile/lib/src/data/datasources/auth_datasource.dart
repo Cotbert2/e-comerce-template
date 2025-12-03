@@ -71,6 +71,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           'email': email,
           'password': password,
           'phone': phone,
+          'role': 'customer', // Add the required role field
         }
       },
     );
