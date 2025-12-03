@@ -152,10 +152,15 @@ export class InventorySeeder {
       }
     ];
 
-    await categoriesCollection.insertMany(categories);
-    await providersCollection.insertMany(providers);
+    // Insertar categorías y proveedores primero para obtener sus _id
+    const insertedCategories = await categoriesCollection.insertMany(categories);
+    const insertedProviders = await providersCollection.insertMany(providers);
 
-    // Crear productos
+    // Obtener los _id generados por MongoDB
+    const categoryIds = Object.values(insertedCategories.insertedIds);
+    const providerIds = Object.values(insertedProviders.insertedIds);
+
+    // Crear productos con referencias correctas a los _id
     const products = [
       {
         id: uuidv4(),
@@ -163,8 +168,8 @@ export class InventorySeeder {
         price: 25999,
         description: 'Smartphone Apple iPhone 15 Pro con cámara profesional',
         stock: 50,
-        category: categories[0],
-        provider: providers[0],
+        category: categoryIds[0], // Electrónicos
+        provider: providerIds[0], // TechSupplier S.A.
         rating: 4.8,
         discount: 5,
         image: 'https://m.media-amazon.com/images/I/61v5Jay9F5L._AC_UF894,1000_QL80_.jpg'
@@ -175,11 +180,23 @@ export class InventorySeeder {
         price: 22999,
         description: 'Smartphone Samsung Galaxy S24 con AI integrada',
         stock: 45,
-        category: categories[0],
-        provider: providers[0],
+        category: categoryIds[0], // Electrónicos
+        provider: providerIds[0], // TechSupplier S.A.
         rating: 4.7,
         discount: 10,
         image: 'https://mobilestore.ec/wp-content/uploads/2024/01/Samsung-Galaxy-S24-Ultra-Titanium-Black-Mobile-Store-Ecuador.jpg'
+      },
+      {
+        id: uuidv4(),
+        name: 'Laptop Dell Inspiron',
+        price: 18999,
+        description: 'Laptop Dell Inspiron 15 con procesador Intel i7',
+        stock: 40,
+        category: categoryIds[0], // Electrónicos
+        provider: providerIds[0], // TechSupplier S.A.
+        rating: 4.5,
+        discount: 12,
+        image: 'https://mobilestore.ec/wp-content/uploads/2021/09/Dell-Inspiron-15-3000-Mobile-Store-Ecuador3.jpg'
       },
       {
         id: uuidv4(),
@@ -187,8 +204,8 @@ export class InventorySeeder {
         price: 599,
         description: 'Camiseta polo de algodón 100% en varios colores',
         stock: 100,
-        category: categories[1],
-        provider: providers[1],
+        category: categoryIds[1], // Ropa
+        provider: providerIds[1], // Fashion World Inc.
         rating: 4.3,
         discount: 0,
         image: 'https://m.media-amazon.com/images/I/81NahZXF9QL._AC_SL1396_.jpg'
@@ -199,8 +216,8 @@ export class InventorySeeder {
         price: 15999,
         description: 'Sofá moderno de 3 plazas en tela premium',
         stock: 15,
-        category: categories[2],
-        provider: providers[2],
+        category: categoryIds[2], // Hogar
+        provider: providerIds[2], // Home Comfort Ltd.
         rating: 4.6,
         discount: 15,
         image: 'https://i5.walmartimages.com/seo/3-Seater-Sofa-Couch-Modern-Linen-Tufed-Upholstered-2-Pillows-Armrest-Design-Wooden-Tapered-Legs-Accent-Arm-Sofas-Living-Room-Bedroom-Office-Grey_04ec8f14-062d-44d0-9aed-9dac7be853b9.5e2b287cd25bd91421fd9bb39412dbc8.jpeg'
@@ -211,8 +228,8 @@ export class InventorySeeder {
         price: 8999,
         description: 'Bicicleta de montaña con suspensión completa',
         stock: 25,
-        category: categories[3],
-        provider: providers[3],
+        category: categoryIds[3], // Deportes
+        provider: providerIds[3], // Sports Pro Colombia
         rating: 4.5,
         discount: 20,
         image: 'https://www.bicis.ec/cdn/shop/files/bicicleta-cube-reaction-hybrid-performance-625-negro-gris-aro-29-talla-18-1-2048-2048_6062e1ed-ef0e-493a-ad0b-50eb09f37b35_600x.webp?v=1712093210'
@@ -223,8 +240,8 @@ export class InventorySeeder {
         price: 299,
         description: 'Edición especial del clásico de Cervantes',
         stock: 200,
-        category: categories[4],
-        provider: providers[4],
+        category: categoryIds[4], // Libros
+        provider: providerIds[4], // Book Universe S.R.L.
         rating: 4.9,
         discount: 0,
         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8G-rtWePXp3vy3x5WiP_VvErqYUYVAGjz_w&s'
@@ -235,8 +252,8 @@ export class InventorySeeder {
         price: 1299,
         description: 'Crema facial con colágeno y vitamina E',
         stock: 80,
-        category: categories[5],
-        provider: providers[5],
+        category: categoryIds[5], // Salud
+        provider: providerIds[5], // Wellness Solutions
         rating: 4.4,
         discount: 25,
         image: 'https://bassa.com.ec/wp-content/uploads/2020/08/BB-crema-antiedad-1200x1200Lok.jpg'
@@ -247,8 +264,8 @@ export class InventorySeeder {
         price: 3999,
         description: 'Juego de 4 llantas Michelin para automóvil',
         stock: 30,
-        category: categories[6],
-        provider: providers[6],
+        category: categoryIds[6], // Automóvil
+        provider: providerIds[6], // Auto Parts Express
         rating: 4.7,
         discount: 10,
         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREfbdHn04KDKWd2SrhSSRQwtRxiii1D27OGQ&s'
@@ -259,8 +276,8 @@ export class InventorySeeder {
         price: 2999,
         description: 'Set de construcción LEGO Creator Expert 2000 piezas',
         stock: 60,
-        category: categories[7],
-        provider: providers[7],
+        category: categoryIds[7], // Juguetes
+        provider: providerIds[7], // Toy Kingdom
         rating: 4.8,
         discount: 0,
         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnbF-TQWbVuxUYfw3WjlmFRJq9xM1qjSfbtQ&s'
@@ -271,8 +288,8 @@ export class InventorySeeder {
         price: 4999,
         description: 'Guitarra acústica Yamaha para principiantes',
         stock: 35,
-        category: categories[8],
-        provider: providers[8],
+        category: categoryIds[8], // Música
+        provider: providerIds[8], // Music Store Colombia
         rating: 4.6,
         discount: 15,
         image: 'https://www.megaacustica.com/wp-content/uploads/2021/11/1-3.png'
@@ -283,23 +300,11 @@ export class InventorySeeder {
         price: 199,
         description: 'Maceta decorativa de cerámica para plantas',
         stock: 150,
-        category: categories[9],
-        provider: providers[9],
+        category: categoryIds[9], // Jardinería
+        provider: providerIds[9], // Garden Paradise
         rating: 4.2,
         discount: 0,
         image: 'https://kywiec.vtexassets.com/arquivos/ids/159056/403385.jpg?v=638380025676970000'
-      },
-      {
-        id: uuidv4(),
-        name: 'Laptop Dell Inspiron',
-        price: 18999,
-        description: 'Laptop Dell Inspiron 15 con procesador Intel i7',
-        stock: 40,
-        category: categories[0],
-        provider: providers[0],
-        rating: 4.5,
-        discount: 12,
-        image: 'https://mobilestore.ec/wp-content/uploads/2021/09/Dell-Inspiron-15-3000-Mobile-Store-Ecuador3.jpg'
       }
     ];
 

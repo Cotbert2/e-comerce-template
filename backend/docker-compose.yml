@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   backend:
-    image: cotbert2/e-commerce-back:latest
+    image: cotbert2/e-commerce-back:v2
     container_name: ecommerce-backend
     ports:
       - "3000:3000"
