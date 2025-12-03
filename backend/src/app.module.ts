@@ -12,6 +12,7 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { PaymentsModule } from './payments/payments.module';
 import { SellsModule } from './sells/sells.module';
+import { DatabaseModule } from './database/database.module';
 
 
 
@@ -25,7 +26,7 @@ console.log('DB_USER',process.env.DB_USER);
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile : join(process.cwd(), 'src/schema.gql'),
-    }), MongooseModule.forRoot(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.4vufa.mongodb.net/espe?retryWrites=true&w=majority&appName=Cluster0&tlsAllowInvalidCertificates=true`), PostsModule, CatalogModule, InventoryModule, UsersModule, PaymentsModule, SellsModule
+    }), MongooseModule.forRoot(process.env.MONGODB_URI), PostsModule, CatalogModule, InventoryModule, UsersModule, PaymentsModule, SellsModule, DatabaseModule
   ],
   controllers: [AppController],
   providers: [AppService],
