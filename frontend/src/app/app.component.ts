@@ -30,13 +30,24 @@ import { CategoriesComponent } from "./categories/categories.component";
     CardModule,
     CarouselModule,
     TagModule,
-    FormsModule, LoginComponent, ProductComponent,
-    CheckoutComponent,
-    CategoriesComponent
+    FormsModule, 
+    // LoginComponent, ProductComponent,
+    // CheckoutComponent,
+    // CategoriesComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('500ms', style({ opacity: 1 }))
+      ]),
+      transition(':leave', [
+        animate('500ms', style({ opacity: 0 }))
+      ])
+    ])
+  ]
 })
 export class AppComponent implements OnInit {
   title = 'Jackson';
@@ -48,7 +59,7 @@ export class AppComponent implements OnInit {
 
   itemInCart: any = [];
 
-  productsInfo : any = {};
+  productsInfo : any = [];
 
 
   constructor(

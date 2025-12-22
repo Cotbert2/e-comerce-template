@@ -42,9 +42,7 @@ export class CategoriesComponent implements OnInit{
           value: category.id
         }
       });
-    }, (error) => {
-      console.log('error: ',error);
-    })
+    });
   }
 
   getProductsByCategory(){
