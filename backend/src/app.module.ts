@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
-import { PostsModule } from './posts/posts.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CatalogModule } from './catalog/catalog.module';
 import { InventoryModule } from './inventory/inventory.module';
@@ -15,7 +14,7 @@ import { SellsModule } from './sells/sells.module';
 
 
 
-console.log('DB_USER',process.env.DB_USER);
+console.log('Mongo Uri',process.env.MONGO_URI);
 
 @Module({
   imports: [
@@ -24,8 +23,9 @@ console.log('DB_USER',process.env.DB_USER);
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      playground: true,
       autoSchemaFile : join(process.cwd(), 'src/schema.gql'),
-    }), MongooseModule.forRoot(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.4vufa.mongodb.net/espe?retryWrites=true&w=majority&appName=Cluster0&tlsAllowInvalidCertificates=true`), PostsModule, CatalogModule, InventoryModule, UsersModule, PaymentsModule, SellsModule
+    }), MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://localhost:27017/ecommerce'), CatalogModule, InventoryModule, UsersModule, PaymentsModule, SellsModule
   ],
   controllers: [AppController],
   providers: [AppService],

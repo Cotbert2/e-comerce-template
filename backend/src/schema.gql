@@ -2,29 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type RegisterUser {
-  id: String
-  name: String
-  email: String
-  password: String
-  phone: String
-}
-
-type Customer {
-  id: String
-  name: String
-  phone: String
-  identification: String
-  user: String
-}
-
-type User {
-  id: String
-  name: String
-  email: String
-  phone: String
-}
-
 type City {
   id: String
   name: String
@@ -70,6 +47,21 @@ type Product {
   image: String
 }
 
+type Customer {
+  id: String
+  name: String
+  phone: String
+  identification: String
+  user: String
+}
+
+type User {
+  id: String
+  name: String
+  email: String
+  phone: String
+}
+
 type PaymentMethod {
   id: String
   giftCardNumber: String
@@ -100,7 +92,6 @@ type SellsEntity {
 }
 
 type Query {
-  posts: [RegisterUser!]!
   countries: [Country!]!
   categories: [Category!]!
   providers: [Provider!]!

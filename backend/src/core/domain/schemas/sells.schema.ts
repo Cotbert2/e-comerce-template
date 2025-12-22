@@ -17,7 +17,7 @@ export class Sell extends Document {
     contactPhone: string;
 
     //city
-    @Prop({ type : MongooseSchema.Types.ObjectId, ref : 'City' })
+    @Prop({ required: true })
     city: string;
 
     //payment method

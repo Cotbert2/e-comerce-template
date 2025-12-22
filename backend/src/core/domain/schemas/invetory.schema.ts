@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Mongoose, Schema as MongooseSchema } from 'mongoose';
 
 @Schema()
-export class Category {
+export class Category extends Document {
     @Prop({ required: true })
     name: string;
 
@@ -13,7 +13,7 @@ export class Category {
 export const CategorySchema = SchemaFactory.createForClass(Category);
 
 @Schema()
-export class Provider {
+export class Provider extends Document {
     @Prop({ required: true })
     name: string;
 
