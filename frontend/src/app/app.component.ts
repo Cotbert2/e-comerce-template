@@ -31,9 +31,9 @@ import { CategoriesComponent } from "./categories/categories.component";
     CarouselModule,
     TagModule,
     FormsModule, 
-    // LoginComponent, ProductComponent,
-    // CheckoutComponent,
-    // CategoriesComponent
+    LoginComponent, ProductComponent,
+    CheckoutComponent,
+    CategoriesComponent
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
