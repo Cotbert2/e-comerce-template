@@ -1,8 +1,8 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { SellsService } from './sells.service';
-import { SellInput } from 'src/core/domain/inputs/sells.input';
+import { SellInput } from '../core/domain/inputs/sells.input';
 // Removed incorrect import
-import { SellsEntity } from 'src/core/domain/entities/sells.entity';
+import { SellsEntity } from '../core/domain/entities/sells.entity';
 
 @Resolver()
 export class SellsResolver {

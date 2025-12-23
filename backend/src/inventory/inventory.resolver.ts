@@ -1,8 +1,8 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CategoryService, ProductsService, ProviderService } from './inventory.service';
-import { Country } from 'src/core/domain/entities/country.entity';
-import { CategoryInput, ProductInput, ProviderInput } from 'src/core/domain/inputs/invetory.input';
-import { Category, Product, Provider } from 'src/core/domain/entities/inventory.entity';
+import { Country } from '../core/domain/entities/country.entity';
+import { CategoryInput, ProductInput, ProviderInput } from '../core/domain/inputs/invetory.input';
+import { Category, Product, Provider } from '../core/domain/entities/inventory.entity';
 
 
 @Resolver()

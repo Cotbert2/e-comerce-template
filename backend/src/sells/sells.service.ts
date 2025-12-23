@@ -2,11 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { response } from 'express';
 import { Category, Product, Provider } from './../core/domain/schemas/invetory.schema';
-import { Payment } from 'src/core/domain/schemas/payments.schema';
+import { Payment } from '../core/domain/schemas/payments.schema';
 
 import mongoose, { Model } from 'mongoose';
-import { Country } from 'src/core/domain/schemas/country.schema';
-import { Sell } from 'src/core/domain/schemas/sells.schema';
+import { Country } from '../core/domain/schemas/country.schema';
+import { Sell } from '../core/domain/schemas/sells.schema';
+
 
 @Injectable()
 export class SellsService {

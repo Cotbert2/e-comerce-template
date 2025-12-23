@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
-import { Payment } from 'src/core/domain/schemas/payments.schema';
+import { Payment } from '../core/domain/schemas/payments.schema';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()

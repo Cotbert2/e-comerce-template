@@ -1,8 +1,8 @@
 import { InjectModel } from '@nestjs/mongoose';
-import {Country} from './../core/domain/schemas/country.schema';
+import {Country} from '../core/domain/schemas/country.schema';
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { ICountry } from 'src/core/domain/interfaces/places.interface';
+import { ICountry } from '../core/domain/interfaces/places.interface';
 
 @Injectable()
 export class CatalogService {
