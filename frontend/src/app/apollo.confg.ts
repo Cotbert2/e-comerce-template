@@ -33,7 +33,7 @@ const defaultOptions: DefaultOptions = {
 export function apolloOptionsFactory(): ApolloClientOptions<any> {
   const httpLink = inject(HttpLink);
   return {
-    uri: 'http://localhost:3000/graphql',
+    uri: 'https://e-comerce-template.onrender.com/graphql',
     //dont save cache
     cache: new InMemoryCache(),
     defaultOptions: defaultOptions,
