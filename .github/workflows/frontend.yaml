@@ -5,7 +5,7 @@ on:
     branches:
       - testing
     paths:
-      - "frontend/**"
+      - "frontend/**" 
 
 jobs:
   deploy-frontend:
