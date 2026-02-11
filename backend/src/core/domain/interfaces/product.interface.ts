@@ -1,4 +1,4 @@
-import { ICountry } from './places.interface'
+import { ICountry } from './places.interface';
 
 export interface ICategory{
     id : string;

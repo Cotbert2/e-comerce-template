@@ -1,8 +1,8 @@
-import { Field, ObjectType } from "@nestjs/graphql";
-import { Product } from "./inventory.entity";
-import { Customer } from "./auth.entity";
-import { PaymentMethod } from "./payments.entity";
-import { City } from "./country.entity";
+import { Field, ObjectType } from '@nestjs/graphql';
+import { Product } from './inventory.entity';
+import { Customer } from './auth.entity';
+import { PaymentMethod } from './payments.entity';
+import { City } from './country.entity';
 
 
 @ObjectType()
@@ -43,7 +43,7 @@ export class SellsEntity {
     contactPhone : string;
 
     @Field((type) => String, {nullable: true})
-    city : String;
+    city : string;
 
     @Field((type) => PaymentMethod, {nullable: true})
     paymentMethod : PaymentMethod;

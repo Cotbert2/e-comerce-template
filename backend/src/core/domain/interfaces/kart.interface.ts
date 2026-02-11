@@ -1,6 +1,6 @@
-import { ICity } from "./places.interface";
-import { IProduct } from "./product.interface";
-import { ICustomer } from "./user.interface";
+import { ICity } from './places.interface';
+import { IProduct } from './product.interface';
+import { ICustomer } from './user.interface';
 
 export interface IAddess{
     id : string;

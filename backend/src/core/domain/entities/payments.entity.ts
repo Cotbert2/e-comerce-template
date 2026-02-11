@@ -1,11 +1,11 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, ObjectType } from '@nestjs/graphql';
 
 
 @ObjectType()
 export class PaymentMethod{
 
     @Field((type) => String, {nullable: true})
-    id : string
+    id : string;
 
     @Field((type) => String, {nullable: true})
     giftCardNumber : string;

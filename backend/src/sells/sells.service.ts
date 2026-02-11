@@ -22,15 +22,15 @@ export class SellsService {
 
     private async getLocationByCityId(cityId: string) {
         return this.countryModel.aggregate([
-            { $unwind: "$states" },
-            { $unwind: "$states.cities" },
-            { $match: { "states.cities._id": new mongoose.Types.ObjectId(cityId) } },
+            { $unwind: '$states' },
+            { $unwind: '$states.cities' },
+            { $match: { 'states.cities._id': new mongoose.Types.ObjectId(cityId) } },
             {
                 $project: {
                     _id: 0,
-                    country: "$name",
-                    state: "$states.name",
-                    city: "$states.cities.name"
+                    country: '$name',
+                    state: '$states.name',
+                    city: '$states.cities.name'
                 }
             }
         ]);
@@ -117,7 +117,7 @@ export class SellsService {
             ...sell,
             total,
             date: new Date(),
-        }
+        };
 
         console.log(dataToSave);
         const newSell = new this.sellRepository(dataToSave);

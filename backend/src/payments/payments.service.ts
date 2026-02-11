@@ -28,7 +28,7 @@ export class PaymentsService {
             paymentMethod: 'gift-card',
             giftCardNumber : uuidv4(),
             giftCardStatus : 'not-registered'
-        }
+        };
         console.log(newGiftCard);
         const mongoResponse = await this.paymentRepository.create(newGiftCard);
         console.log(mongoResponse);
@@ -37,11 +37,11 @@ export class PaymentsService {
     }
 
     public async registerGiftCard(data: any) {
-        console.log('data recived to checlk', data)
+        console.log('data recived to checlk', data);
         const response = await this.paymentRepository.findOneAndUpdate({giftCardNumber: data.giftCardNumber}, {user: data.user, giftCardStatus: 'registered'});
         console.log(response);
         if (response) return true;
-        return false
+        return false;
     }
 
 
