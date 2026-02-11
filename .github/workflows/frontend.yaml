@@ -5,7 +5,8 @@ on:
     branches:
       - testing
     paths:
-      - "frontend/**" 
+      - "frontend/**"
+      - ".github/workflows/frontend.yaml"
 
 jobs:
   deploy-frontend:
