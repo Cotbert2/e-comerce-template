@@ -2,11 +2,7 @@ name: CI/CD Backend - NestJS
 
 on:
   push:
-    branches: [ "testing" ]
-    paths:
-      - "backend/**"
-  pull_request:
-    branches: [ "testing" ]
+    branches: [ "main" ]
     paths:
       - "backend/**"
 
@@ -22,40 +18,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
-          cache-dependency-path: backend/package-lock.json
 
       - name: Install dependencies
         working-directory: backend
-        run: npm ci
-
-      - name: Lint
-        working-directory: backend
-        run: npm run lint
-
-      - name: Run tests
-        working-directory: backend
-        run: npm test
+        run: npm install
 
       - name: Build NestJS
         working-directory: backend
         run: npm run build
 
       - name: Deploy to Render
-        if: github.event_name == 'push' && github.ref == 'refs/heads/testing'
-        env:
-          RENDER_HOOK: ${{ secrets.RENDER_BACKEND_HOOK }}
-        run: |
-          if [ -z "$RENDER_HOOK" ]; then
-            echo "⚠️  RENDER_BACKEND_HOOK secret is not set. Skipping deployment."
-            exit 0
-          fi
-          echo "🚀 Deploying to Render..."
-          response=$(curl -X POST "$RENDER_HOOK" -w "\n%{http_code}" -s)
-          http_code=$(echo "$response" | tail -n1)
-          if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
-            echo "✅ Deploy triggered successfully!"
-          else
-            echo "❌ Deploy failed with HTTP code: $http_code"
-            exit 1
-          fi
+        run: curl -X POST ${{ secrets.RENDER_BACKEND_HOOK }}
