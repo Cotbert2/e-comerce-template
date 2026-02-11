@@ -24,7 +24,7 @@ export class UsersService {
 
         //hash passwd
 
-        data.password = MD5(MD5(data.password).toString()).toString();
+        data.password = MD5(data.password).toString().toString();
 
         const newUser = new this.userRepository(data);
         const mongoResponse = await newUser.save();
@@ -38,7 +38,7 @@ export class UsersService {
 
         //hash passwd
 
-        data.password = MD5(MD5(data.password).toString()).toString();
+        data.password = MD5(data.password).toString().toString();
 
         const user = await this.userRepository.findOne({email: data.email, password: data.password});
         console.log(user);
