@@ -5,6 +5,7 @@ on:
     branches: [ "testing" ]
     paths: 
       - "backend/**"
+      - ".github/workflows/backend.yaml"
 
 jobs:
   backend:
