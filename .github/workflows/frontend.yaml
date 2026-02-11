@@ -6,7 +6,7 @@ on:
       - testing
     paths:
       - "frontend/**"
-      - ".github/workflows/frontend.yaml"
+      - ".github/workflows/frontend.yaml" 
 
 jobs:
   deploy-frontend:
