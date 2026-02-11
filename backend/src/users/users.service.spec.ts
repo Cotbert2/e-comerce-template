@@ -65,6 +65,21 @@ describe('UsersService', () => {
       expect(result).toBe(true);
       expect(mockUserModel).toHaveBeenCalled();
     });
+
+    it('should return false if save fails', async () => {
+      mockUserModel.findOne.mockResolvedValue(null);
+      const mockSaveFailInstance = {
+        save: jest.fn().mockResolvedValue(null),
+      };
+      mockUserModel.mockImplementationOnce(() => mockSaveFailInstance);
+
+      const result = await service.singup({
+        email: 'new@mail.com',
+        password: '123456',
+      });
+
+      expect(result).toBe(false);
+    });
   });
 
   // ---------------- LOGIN ----------------
@@ -104,6 +119,16 @@ describe('UsersService', () => {
 
       expect(result).toBe(true);
     });
+
+    it('should return false if update fails', async () => {
+      mockUserModel.updateOne.mockResolvedValue(null);
+
+      const result = await service.modifyUser({
+        email: 'test@mail.com',
+      });
+
+      expect(result).toBe(false);
+    });
   });
 
   // ---------------- CREATE CUSTOMER ----------------
@@ -128,6 +153,21 @@ describe('UsersService', () => {
 
       expect(result).toEqual({ id: 'cust1' });
       expect(mockCustomerModel).toHaveBeenCalled();
+    });
+
+    it('should return null if customer save fails', async () => {
+      mockUserModel.findOne.mockResolvedValue({ _id: '123' });
+      const mockSaveFailInstance = {
+        save: jest.fn().mockResolvedValue(null),
+      };
+      mockCustomerModel.mockImplementationOnce(() => mockSaveFailInstance);
+
+      const result = await service.createCustomer({
+        user: '123',
+        name: 'Cliente',
+      });
+
+      expect(result).toBeNull();
     });
   });
 });
